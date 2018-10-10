@@ -3,13 +3,15 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="579.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SQLClient.SQLClientController">
+<AnchorPane prefHeight="595.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SQLClient.SQLClientController">
 
     <children>
         <ComboBox fx:id="JDBCDriverCombobox" layoutX="115.0" layoutY="50.0" prefHeight="27.0" prefWidth="230.0" />
@@ -17,11 +19,10 @@
         <TextField fx:id="usernameTextField" layoutX="116.0" layoutY="161.0" prefHeight="27.0" prefWidth="230.0" />
         <TextField fx:id="passwordTextField" layoutX="118.0" layoutY="221.0" prefHeight="27.0" prefWidth="230.0" />
         <TextArea fx:id="sqlCommandTextArea" layoutX="326.0" layoutY="48.0" prefHeight="221.0" prefWidth="363.0" AnchorPane.rightAnchor="20.0" />
-        <TextArea fx:id="sqlExecutionWindowTextArea" layoutX="24.0" layoutY="325.0" prefHeight="180.0" prefWidth="671.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-        <Button fx:id="connectToDatabaseButton" layoutX="198.0" layoutY="283.0" mnemonicParsing="false" onAction="#connectToDatabaseButtonPressed" prefHeight="27.0" prefWidth="150.0" text="Connect to Database" AnchorPane.leftAnchor="198.0" />
-        <Button fx:id="clearSQLCommandButton" layoutX="390.0" layoutY="283.0" mnemonicParsing="false" onAction="#clearSQLCommandButtonPressed" prefWidth="150.0" text="Clear SQL Command" AnchorPane.rightAnchor="240.0" />
+        <Button fx:id="connectToDatabaseButton" layoutX="274.0" layoutY="285.0" mnemonicParsing="false" onAction="#connectToDatabaseButtonPressed" prefHeight="27.0" prefWidth="150.0" text="Connect to Database" AnchorPane.leftAnchor="274.0" />
+        <Button fx:id="clearSQLCommandButton" layoutX="450.0" layoutY="284.0" mnemonicParsing="false" onAction="#clearSQLCommandButtonPressed" prefWidth="150.0" text="Clear SQL Command" AnchorPane.rightAnchor="216.0" />
         <Button fx:id="executeSQLCommandButton" layoutX="529.0" layoutY="283.0" mnemonicParsing="false" onAction="#executeSQLCommandButtonPressed" prefWidth="170.0" text="Execute SQL Command" AnchorPane.rightAnchor="20.0" />
-        <Label fx:id="connectionStatusLabel" layoutX="25.0" layoutY="288.0" prefWidth="250.0" text="No Connection Now" AnchorPane.leftAnchor="20.0" />
+        <Label fx:id="connectionStatusLabel" layoutX="20.0" layoutY="269.0" prefHeight="41.0" prefWidth="250.0" text="No Connection Now" wrapText="true" AnchorPane.leftAnchor="20.0" />
         <Button fx:id="clearResultWindowButton" layoutX="41.0" layoutY="536.0" mnemonicParsing="false" onAction="#clearResultWindowButtonPressed" text="Clear Result Window" AnchorPane.leftAnchor="20.0" />
         <Label layoutX="15.0" layoutY="55.0" text="JDBC Driver" AnchorPane.leftAnchor="20.0" />
         <Label layoutX="15.0" layoutY="105.0" text="Database URL" AnchorPane.leftAnchor="20.0" />
@@ -34,6 +35,12 @@
                 <Image url="@logo-mysql.png" />
             </image>
         </ImageView>
+      <TableView fx:id="resultTableView" layoutX="19.0" layoutY="319.0" prefHeight="200.0" prefWidth="779.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
     </children>
 
 </AnchorPane>

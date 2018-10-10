@@ -48,7 +48,7 @@ public class SQLClientController implements Initializable
     private TextArea sqlCommandTextArea;
 
     @FXML
-    private TextArea queryExecutionWindowTextArea;
+    private TableView resultTableView;
 
     @FXML
     private ImageView imageViewMysql;
@@ -60,7 +60,13 @@ public class SQLClientController implements Initializable
 
         String dbURL = mySQLModel.databaseURLOptions[0];
         mySQLModel.connectToDatabase(usernameTextField.getText(), passwordTextField.getText(), dbURL);
-        connectionStatusLabel.setText("Connected to " + dbURL);
+        if (mySQLModel.connectedToDatabase) {
+            connectionStatusLabel.setText("Connected to " + dbURL);
+            executeSQLCommandButton.setDisable(false);
+        }
+        else {
+            connectionStatusLabel.setText("Failed to connect.\nMake sure server is running and credentials are correct.");
+        }
 
     }
 
@@ -93,7 +99,11 @@ public class SQLClientController implements Initializable
         options = FXCollections.observableArrayList(mySQLModel.databaseURLOptions);
         databaseURLCombobox.setItems(options);
 
-        queryExecutionWindowTextArea.
+        resultTableView = new TableView<MySQLModel>();
+        ObservableList<MySQLModel> model= FXCollections.observableArrayList(mySQLModel);
 
+        resultTableView.setItems(model);
+
+        executeSQLCommandButton.setDisable(true);
     }
 }
