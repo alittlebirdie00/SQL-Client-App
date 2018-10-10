@@ -8,10 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SQLClientController implements Initializable{
+public class SQLClientController implements Initializable
+{
     private MySQLModel mySQLModel;
 
     // ======= FXML UI ========
@@ -46,7 +48,7 @@ public class SQLClientController implements Initializable{
     private TextArea sqlCommandTextArea;
 
     @FXML
-    private TextArea sqlExecutionWindowTextArea;
+    private TextArea queryExecutionWindowTextArea;
 
     @FXML
     private ImageView imageViewMysql;
@@ -90,6 +92,8 @@ public class SQLClientController implements Initializable{
 
         options = FXCollections.observableArrayList(mySQLModel.databaseURLOptions);
         databaseURLCombobox.setItems(options);
+
+        queryExecutionWindowTextArea.
 
     }
 }

@@ -9,7 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="579.0" prefWidth="780.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SQLClient.SQLClientController">
+<AnchorPane prefHeight="595.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SQLClient.SQLClientController">
 
     <children>
         <ComboBox fx:id="JDBCDriverCombobox" layoutX="115.0" layoutY="50.0" prefHeight="27.0" prefWidth="230.0" />
@@ -17,9 +17,9 @@
         <TextField fx:id="usernameTextField" layoutX="116.0" layoutY="161.0" prefHeight="27.0" prefWidth="230.0" />
         <TextField fx:id="passwordTextField" layoutX="118.0" layoutY="221.0" prefHeight="27.0" prefWidth="230.0" />
         <TextArea fx:id="sqlCommandTextArea" layoutX="326.0" layoutY="48.0" prefHeight="221.0" prefWidth="363.0" AnchorPane.rightAnchor="20.0" />
-        <TextArea fx:id="sqlExecutionWindowTextArea" layoutX="24.0" layoutY="325.0" prefHeight="180.0" prefWidth="671.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-        <Button fx:id="connectToDatabaseButton" layoutX="198.0" layoutY="283.0" mnemonicParsing="false" onAction="#connectToDatabaseButtonPressed" prefHeight="27.0" prefWidth="150.0" text="Connect to Database" AnchorPane.leftAnchor="198.0" />
-        <Button fx:id="clearSQLCommandButton" layoutX="390.0" layoutY="283.0" mnemonicParsing="false" onAction="#clearSQLCommandButtonPressed" prefWidth="150.0" text="Clear SQL Command" AnchorPane.rightAnchor="240.0" />
+        <TextArea fx:id="queryExecutionWindowTextArea" layoutX="24.0" layoutY="325.0" prefHeight="180.0" prefWidth="671.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+        <Button fx:id="connectToDatabaseButton" layoutX="274.0" layoutY="285.0" mnemonicParsing="false" onAction="#connectToDatabaseButtonPressed" prefHeight="27.0" prefWidth="150.0" text="Connect to Database" AnchorPane.leftAnchor="274.0" />
+        <Button fx:id="clearSQLCommandButton" layoutX="450.0" layoutY="284.0" mnemonicParsing="false" onAction="#clearSQLCommandButtonPressed" prefWidth="150.0" text="Clear SQL Command" AnchorPane.rightAnchor="216.0" />
         <Button fx:id="executeSQLCommandButton" layoutX="529.0" layoutY="283.0" mnemonicParsing="false" onAction="#executeSQLCommandButtonPressed" prefWidth="170.0" text="Execute SQL Command" AnchorPane.rightAnchor="20.0" />
         <Label fx:id="connectionStatusLabel" layoutX="25.0" layoutY="288.0" prefWidth="250.0" text="No Connection Now" AnchorPane.leftAnchor="20.0" />
         <Button fx:id="clearResultWindowButton" layoutX="41.0" layoutY="536.0" mnemonicParsing="false" onAction="#clearResultWindowButtonPressed" text="Clear Result Window" AnchorPane.leftAnchor="20.0" />

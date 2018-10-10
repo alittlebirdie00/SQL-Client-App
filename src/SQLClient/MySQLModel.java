@@ -65,7 +65,13 @@ public class MySQLModel {
     //Executes the given SQL statement, which may be an INSERT, UPDATE, or DELETE statement
     // or an SQL statement that returns nothing, such as an SQL DDL statement.
     void executeSQLUpdate(String update) {
+        if (!connectedToDatabase) throw new IllegalStateException("Not Connected to a Database.");
 
+        try {
+            int res = statement.executeUpdate(update);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
 
     }
 
