@@ -1,11 +1,17 @@
+/**
+ * Rolando Murillo
+ * COP 4330, Fall 2018
+ * SQL Client Model
+ */
+
 package SQLClient;
 
+// imports
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import javafx.scene.control.Alert;
-
 import javax.swing.table.AbstractTableModel;
 import java.sql.*;
 
+// sole model
 public class MySQLModel extends AbstractTableModel {
     public MysqlDataSource dataSource;
     public Connection connection;
@@ -19,6 +25,8 @@ public class MySQLModel extends AbstractTableModel {
     public String[] driverOptions;
     public String [] databaseURLOptions;
 
+    // initialize the driver and url options
+    // they're arrays in-case more options to be added in the future.
     MySQLModel() {
         driverOptions = new String[1];
         driverOptions[0] = "com.mysql.jdbc.MySQLConnection";
@@ -41,22 +49,22 @@ public class MySQLModel extends AbstractTableModel {
             connection = dataSource.getConnection();
 
             statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
             // Keep track of connection to database
-            connectedToDatabase = true;
-            return connectedToDatabase;
+            return (connectedToDatabase = true);
         } catch (Exception e) {
             System.out.println(e);
             return connectedToDatabase;
         }
     }
 
+    // executes queries that don't require updates
     String executeSQLQuery(String query) {
         if (!connectedToDatabase) throw new IllegalStateException("Not Connected to Database");
         try {
             Statement s = connection.createStatement();
             resultSet = s.executeQuery(query);
             resultSetMetaData = resultSet.getMetaData();
-
             return null;
         } catch (SQLException e ) {
             return e.toString();
@@ -69,7 +77,6 @@ public class MySQLModel extends AbstractTableModel {
         if (!connectedToDatabase) throw new IllegalStateException("Not Connected to a Database.");
         try {
             int res = statement.executeUpdate(update);
-
             // Row count for DML (Data manipulation language)
             return res + " row(s) affected";
         }
@@ -79,13 +86,16 @@ public class MySQLModel extends AbstractTableModel {
     }
 
     boolean responseType(String s) {
+        // if this is true that means a successful updateQuery occurred.
+
+        // otherwise false will be returned,
+        // and this helps the controller's logic by knowing to create an ERROR Alert
         return (s.contains("row(s) affected"));
     }
 
     public Object getValueAt(int row, int column) throws IllegalStateException {
         if (!connectedToDatabase) throw new IllegalStateException("Not Connected to a Database.");
         try {
-            //resultSet.next();
             resultSet.absolute(row + 1);
             return resultSet.getObject(column + 1);
         } catch (SQLException sqlexception) {

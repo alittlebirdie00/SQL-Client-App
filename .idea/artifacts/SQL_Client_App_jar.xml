@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="SQL-Client-App:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SQL_Client_App_jar</output-path>
+    <root id="archive" name="SQL-Client-App.jar">
+      <element id="module-output" name="SQL-Client-App" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../Project 3/SQL Client/SQL-Client-App/dist/lib/mysql-connector-java-5.1.23-bin.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

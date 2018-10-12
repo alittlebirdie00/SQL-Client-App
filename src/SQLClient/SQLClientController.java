@@ -1,6 +1,12 @@
+/**
+ * Rolando Murillo
+ * COP 4330, Fall 2018
+ * SQL Client Controller
+ */
+
 package SQLClient;
 
-import javafx.beans.property.SimpleObjectProperty;
+// imports
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,21 +15,20 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.beans.value.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
-import javafx.*;
-import javax.swing.*;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 
+// sole controller
 public class SQLClientController implements Initializable
 {
+    // property of the mySQLModel object
     private MySQLModel mySQLModel;
+
+    // property to keep track of all the returned records from a single query
+    // updates after every query execution
     private ObservableList<ObservableList> records;
 
     // ======= FXML UI ========
@@ -31,16 +36,7 @@ public class SQLClientController implements Initializable
     private Label connectionStatusLabel;
 
     @FXML
-    private Button connectToDatabaseButton;
-
-    @FXML
-    private Button clearSQLCommandButton;
-
-    @FXML
     private Button executeSQLCommandButton;
-
-    @FXML
-    private Button clearResultWindowButton;
 
     @FXML
     private ComboBox<String> JDBCDriverCombobox;
@@ -60,24 +56,22 @@ public class SQLClientController implements Initializable
     @FXML
     private TableView<ObservableList> resultTableView;
 
-    @FXML
-    private ImageView imageViewMysql;
-
 
     // ======= FXML UI Action Events ========
     @FXML
     private void connectToDatabaseButtonPressed(ActionEvent event) {
 
+        // get the url from the observablelist
         String dbURL = mySQLModel.databaseURLOptions[0];
         mySQLModel.connectToDatabase(usernameTextField.getText(), passwordTextField.getText(), dbURL);
+
+        // connection status label
         if (mySQLModel.connectedToDatabase) {
             connectionStatusLabel.setText("Connected to " + dbURL);
             executeSQLCommandButton.setDisable(false);
         }
-        else {
+        else
             connectionStatusLabel.setText("Failed to connect.\nMake sure server is running and credentials are correct.");
-        }
-
     }
 
     @FXML
@@ -108,19 +102,29 @@ public class SQLClientController implements Initializable
                 for (int i = 0; i < mySQLModel.getColumnCount(); i++) {
 
                     TableColumn col = new TableColumn<>(mySQLModel.getColumnName(i));
+
+                    // console printing
                     System.out.printf("%-20s\t", mySQLModel.getColumnName(i));
+
                     final int j = i;
 
-                    //col.setCellValueFactory(new PropertyValueFactory<HashMap, Object>(mySQLModel.getColumnName(i)));
+                    // configuring the retrieval method the data for each cell
                     col.setCellValueFactory(new Callback<CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
                         public ObservableValue<String> call(CellDataFeatures<ObservableList, String> param) {
                             return new SimpleStringProperty(param.getValue().get(j).toString());
                         }
                     });
 
+                    col.setStyle( "-fx-alignment: CENTER;");
+
+                    // Dynamically set the width of each column
+                    col.setPrefWidth(resultTableView.getWidth() / mySQLModel.getColumnCount());
+
+                    // add the configured column to the tableview
                     resultTableView.getColumns().add(col);
                 }
 
+                // Console printing
                 System.out.println();
                 for (int i = 0; i < mySQLModel.getColumnCount(); i++) {
                     System.out.printf("%-20s\t", "---------------");
@@ -141,6 +145,7 @@ public class SQLClientController implements Initializable
                         System.out.println();
                     }
 
+                    // give the tableview the data for its cells (the records instance (ObservableList))
                     resultTableView.setItems(records);
                     mySQLModel.resultSet.first();
                 } catch (SQLException e) {
@@ -163,28 +168,32 @@ public class SQLClientController implements Initializable
 
     @FXML
     private void clearResultWindowButtonPressed(ActionEvent event) {
+        // Clear the items and columns
         resultTableView.getItems().clear();
         resultTableView.getColumns().clear();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Initialize the MySQL model object property
+        // Create the model instance
         mySQLModel = new MySQLModel();
 
+        // Give the driver combobox its options
         ObservableList<String> options = FXCollections.observableArrayList(mySQLModel.driverOptions);
         JDBCDriverCombobox.setItems(options);
 
+        // Give the database url combobox its options
         options = FXCollections.observableArrayList(mySQLModel.databaseURLOptions);
         databaseURLCombobox.setItems(options);
 
-
+        // Change some UI states
         executeSQLCommandButton.setDisable(true);
         resultTableView.getItems().clear();
         resultTableView.getColumns().clear();
+        resultTableView.setId("myTableView");
     }
 
-    void createAlert(String message, Alert.AlertType type) {
+    private void createAlert(String message, Alert.AlertType type) {
         // Show error message
         Alert alert = new Alert(type);
         alert.setContentText(message);

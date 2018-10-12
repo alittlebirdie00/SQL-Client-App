@@ -1,3 +1,9 @@
+/**
+ * Rolando Murillo
+ * COP 4330, Fall 2018
+ * SQL Client Main
+ */
+
 package SQLClient;
 
 import javafx.application.Application;
@@ -13,8 +19,8 @@ public class SQLClient extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("SQLClient.fxml"));
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        primaryStage.setTitle("MySQL Client");
     }
-
 
     public static void main(String[] args) {
         launch(args);
