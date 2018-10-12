@@ -1,6 +1,7 @@
 package SQLClient;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
+import javafx.scene.control.Alert;
 
 import javax.swing.table.AbstractTableModel;
 import java.sql.*;
@@ -49,44 +50,48 @@ public class MySQLModel extends AbstractTableModel {
         }
     }
 
-    void executeSQLQuery(String query) {
-        //if (!connectedToDatabase) throw new IllegalStateException("Not Connected to Database");
+    String executeSQLQuery(String query) {
+        if (!connectedToDatabase) throw new IllegalStateException("Not Connected to Database");
         try {
             Statement s = connection.createStatement();
             resultSet = s.executeQuery(query);
             resultSetMetaData = resultSet.getMetaData();
 
-            resultSet.last();
-            numberOfRows = resultSet.getRow();
-            System.out.println(resultSetMetaData.getColumnName(1));
-
-        } catch (Exception e) {
-            System.out.println(e);
+            return null;
+        } catch (SQLException e ) {
+            return e.toString();
         }
     }
 
-    //Executes the given SQL statement, which may be an INSERT, UPDATE, or DELETE statement
+    // Executes the given SQL statement, which may be an INSERT, UPDATE, or DELETE statement
     // or an SQL statement that returns nothing, such as an SQL DDL statement.
-    void executeSQLUpdate(String update) {
+    String executeSQLUpdate(String update) {
         if (!connectedToDatabase) throw new IllegalStateException("Not Connected to a Database.");
-
         try {
             int res = statement.executeUpdate(update);
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
 
+            // Row count for DML (Data manipulation language)
+            return res + " row(s) affected";
+        }
+        catch (SQLException exception) {
+            return exception.toString();
+        }
+    }
+
+    boolean responseType(String s) {
+        return (s.contains("row(s) affected"));
     }
 
     public Object getValueAt(int row, int column) throws IllegalStateException {
         if (!connectedToDatabase) throw new IllegalStateException("Not Connected to a Database.");
         try {
-            resultSet.next();
+            //resultSet.next();
             resultSet.absolute(row + 1);
             return resultSet.getObject(column + 1);
         } catch (SQLException sqlexception) {
             sqlexception.printStackTrace();
         }
+
         return "";
     }
 
@@ -118,7 +123,7 @@ public class MySQLModel extends AbstractTableModel {
     public String getColumnName(int column) throws IllegalStateException {
         if (!connectedToDatabase) throw new IllegalStateException("Not Connected to a Database.");
         try {
-            String columnName = resultSetMetaData.getColumnName(column + 1);
+            return resultSetMetaData.getColumnName(column + 1);
         } catch (SQLException sqlexception) {
             sqlexception.printStackTrace();
         }
@@ -128,7 +133,16 @@ public class MySQLModel extends AbstractTableModel {
 
     public int getRowCount() throws IllegalStateException {
         if (!connectedToDatabase) throw new IllegalStateException("Not Connected to a Database");
-        return numberOfRows;
+        try {
+            resultSet.last();
+            numberOfRows = resultSet.getRow();
+            resultSet.first();
+            return numberOfRows;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
     void disconnectFromDatabase() {
