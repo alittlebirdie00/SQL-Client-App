@@ -4,4 +4,11 @@ Connect to a MySQL Database with this client app and execute queries against it 
 
 ## Here are some screenshots
 
-![Alt text](/1.png?raw=true "Title")
+
+![Alt text](/query-screenshot.png?raw=true "Query")
+
+
+![Alt text](/insert-screenshot.png?raw=true "Query")
+
+
+![Alt text](/query-screenshot2.png?raw=true "Insert")
